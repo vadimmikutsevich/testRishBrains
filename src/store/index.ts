@@ -1,13 +1,17 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import userReducer from './userSlice';
 import clientsReducer from './clientsSlice';
 
-export const store = configureStore({
-  reducer: {
-    user: userReducer,
-    clients: clientsReducer,
-  },
-});
+const rootReducer = combineReducers({
+    userReducer, clientsReducer
+})
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export const setupStore = () => {
+    return configureStore({
+        reducer: rootReducer
+    })
+}
+
+export type RootState = ReturnType<typeof rootReducer>
+export type Store = ReturnType<typeof setupStore>
+export type Dispatch = Store['dispatch']
