@@ -25,18 +25,7 @@ export const clientsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addMatcher(isPending, (state) => {
-        state.status = 'loading';
-      })
-      .addMatcher(isFulfilled, (state) => {
-        state.status = 'idle';
-      })
-      .addMatcher(isRejected, (state) => {
-        state.status = 'failed';
-      });
-
-    builder
+      builder
       .addCase(getClients.fulfilled, (state, { payload }: PayloadAction<Client[]>) => {
         state.clients = payload;
       })
@@ -54,6 +43,15 @@ export const clientsSlice = createSlice({
       })
       .addCase(removeClient.fulfilled, (state, { payload }: PayloadAction<string>) => {
         state.clients = state.clients.filter(client => client.id !== payload);
+      })
+      .addMatcher(isPending, (state) => {
+        state.status = 'loading';
+      })
+      .addMatcher(isFulfilled, (state) => {
+        state.status = 'idle';
+      })
+      .addMatcher(isRejected, (state) => {
+        state.status = 'failed';
       });
   },
 });
