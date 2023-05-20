@@ -8,7 +8,7 @@ export interface Client {
   id: string;
   name: string;
   surname: string;
-  birthday: string;
+  age: string;
   phone: string;
   country: string;
 }

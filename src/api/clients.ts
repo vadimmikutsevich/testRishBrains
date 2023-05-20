@@ -5,8 +5,8 @@ const API_URL = 'http://localhost:3333';
 
 export const getClients = async (): Promise<Client[]> => {
   try {
-    const response = await axios.get<Client[]>(`${API_URL}/clients`);
-    return response.data;
+    const response = await axios.get<{clients: Client[]}>(`${API_URL}/clients`);
+    return response.data.clients;
   } catch (error) {
       if (error instanceof Error) {
         throw new Error(`Could not fetch clients: ${error.message}`);

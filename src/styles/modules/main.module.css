@@ -2,4 +2,32 @@
     background-color: #F2F2F2;
     width: 100%;
     height: calc(100vh - 60px);
+    overflow: 'initial';
+}
+
+.content {
+    width: 70%;
+    margin: auto;
+}
+
+.loader {
+    width: 100%;
+    margin: auto;
+    padding-top: 20px;
+}
+
+.sortInputs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 60px;
+}
+
+.searchInput {
+    max-width: 200px;
+    width: 100%;
+}
+
+.clientsContainer {
+    padding-top: 20px;
 }

@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { FC } from "react"
-import { Dropdown, Button, MenuProps, Menu } from 'antd'
+import { Dropdown, Button } from 'antd'
 import {IoLogInOutline, IoPersonOutline, IoChevronDownOutline} from 'react-icons/io5'
-import UserMenu from "../components/UserMenu"
 import { useAuth, useAppDispatch } from "../hooks"
 import { logoutUser } from "../store/userSlice"
 import logo from '../assets/logo.png'
@@ -21,7 +20,7 @@ const Header: FC = () => {
         {
             key: 1,
             label: (
-                <a onClick={handleLogout}>
+                <a onClick={handleLogout} className={styles.signOutBtn}>
                     <span className={styles.buttonText}>Sign Out</span>
                 </a>
             )
@@ -37,14 +36,14 @@ const Header: FC = () => {
             <nav className={styles.nav}>
                 <h3 className={styles.subTitle}>Clients</h3>
 
-                {!isUserLoggedIn ? (
+                {isUserLoggedIn ? (
                     <Dropdown menu={{items}} trigger={['hover']} className={styles.userDropDown}>
                         <a onClick={(e) => e.preventDefault()}>
                             <IoPersonOutline size={20} style={rightIconMargin}/>
                             <span>
                                 a.gerasimov
                             </span>
-                            <IoChevronDownOutline size={18} style={leftIconMargin}/>
+                            <IoChevronDownOutline size={14} style={leftIconMargin} color="#87898F"/>
                         </a>
                     </Dropdown>
                 ) : (

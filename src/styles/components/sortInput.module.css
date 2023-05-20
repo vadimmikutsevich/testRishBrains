@@ -1,0 +1,31 @@
+.wrapper {
+    background-color: white;
+    border-radius: 10px;
+}
+
+.dropDown {
+    display: flex;
+    align-items: center;
+    max-width: 250px;
+    width: 100%;
+}
+
+.radioButton {
+    width: 100%;
+}
+
+.dropDownLabel {
+    flex: 1 1 70%;
+    text-align: start;
+    color: #87898F;
+}
+
+.dropDownSelectedValue {
+    color: #313131;
+}
+
+.dropDownFooter {
+    background-color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+}
