@@ -9,6 +9,7 @@ export const loginUser = async (payload: UserLoginPayload): Promise<User> => {
     if (response.status !== 200) {
       throw new Error(`Unexpected response code: ${response.status}`);
     }
+    
     return response.data;
   } catch (error) {
     if (error instanceof Error) {

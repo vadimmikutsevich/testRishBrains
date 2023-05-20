@@ -2,18 +2,20 @@
 import React, { FC } from "react"
 import { Dropdown, Button } from 'antd'
 import {IoLogInOutline, IoPersonOutline, IoChevronDownOutline} from 'react-icons/io5'
-import { useAuth, useAppDispatch } from "../hooks"
-import { logoutUser } from "../store/userSlice"
+import { useAuth } from "../hooks"
 import logo from '../assets/logo.png'
 import styles from '../styles/modules/header.module.css'
 import { leftIconMargin, rightIconMargin } from "../styles/inLineStyles"
 
-const Header: FC = () => {
+interface HeaderProps {
+    handlePopups: (type: string) => void
+}
+
+const Header: FC<HeaderProps> = ({handlePopups}) => {
     const isUserLoggedIn = useAuth()
-    const dispatch = useAppDispatch()
 
     const handleLogout = () => {
-        dispatch(logoutUser());
+       handlePopups('sign_out')
     };
 
     const items = [
@@ -47,7 +49,7 @@ const Header: FC = () => {
                         </a>
                     </Dropdown>
                 ) : (
-                    <Button className={styles.button} type="primary">
+                    <Button className={styles.button} type="primary" onClick={() => handlePopups('sign_in')}>
                         <IoLogInOutline size={24} style={rightIconMargin}/>
                         <span className={styles.buttonText}>Sign In</span>
                     </Button>
