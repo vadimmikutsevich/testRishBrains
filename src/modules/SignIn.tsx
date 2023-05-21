@@ -23,7 +23,7 @@ const SignIn: React.FC<SignInProps> = ({visible, handlePopups}) => {
                     return message.error('Something went wrong!')
                 }
 
-                return message.success('Logen In successfuly!')
+                return message.success('Loged In successfuly!')
             })
     };
 

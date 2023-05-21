@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import { Col, Input, Row, Spin, Layout } from 'antd'
 import { IoSearchOutline } from 'react-icons/io5'
-import ClientCard from '../components/ClientCard'
+import ClientCard from './ClientCard'
 import SortInput from '../components/SortInput'
 import { getClients } from '../store/clientsSlice'
 import styles from '../styles/modules/main.module.css'
@@ -10,7 +10,11 @@ import { Client } from '../models'
 
 const { Content } = Layout
 
-const Main: React.FC = () => {
+interface MainProps {
+  handlePopups: (type: string) => void
+}
+
+const Main: React.FC<MainProps> = ({ handlePopups }) => {
   const dispatch = useAppDispatch()
   const {clients, status} = useAppSelector(state => state.clientsReducer)
 
@@ -66,7 +70,7 @@ const Main: React.FC = () => {
                     <Row gutter={16}>
                         {sortedAndFilteredClients.map((client: Client) => (
                             <Col span={8} key={client.id}>
-                                <ClientCard client={client}/>
+                                <ClientCard client={client} handlePopups={handlePopups}/>
                             </Col>
                         ))}
                     </Row>

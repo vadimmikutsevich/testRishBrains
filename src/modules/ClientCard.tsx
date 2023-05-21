@@ -1,18 +1,31 @@
 import React, {FC, memo} from "react"
 import { Card } from "antd"
 import {IoLocationOutline, IoPhonePortraitOutline, IoCalendarClearOutline} from 'react-icons/io5'
+import { getClient } from "../store/clientsSlice"
 import { Client } from "../models"
-import styles from '../styles/components/clientCard.module.css'
+import styles from '../styles/modules/clientCard.module.css'
 import avatar from '../assets/ava.png'
 import { rightIconMargin } from "../styles/inLineStyles"
+import { useAppDispatch, useAuth } from "../hooks"
 
 interface UserCardProps {
     client: Client
+    handlePopups: (type: string) => void
 }
 
-const ClientCard: FC<UserCardProps> = memo(function({client}) {
+const ClientCard: FC<UserCardProps> = memo(function({client, handlePopups}) {
+    const dispatch = useAppDispatch()
+    const isLogin = useAuth()
+
+    const showClient = () => {
+        if(isLogin) {
+            dispatch(getClient(client.id)).then(() => handlePopups('show_user'))
+
+        }
+    }
+
     return (
-        <Card bordered={false} className={styles.card}>
+        <Card bordered={false} className={styles.card} onClick={showClient}>
             <img src={avatar} alt="avatar" className={styles.avatar}/>
 
             <p className={styles.name}>

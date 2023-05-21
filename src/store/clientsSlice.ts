@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, isPending, isFulfilled, isRejected, PayloadAction } from '@reduxjs/toolkit';
 import { Client } from '../models';
+import { RootState } from '.';
 import * as clientsApi from '../api/clients';
 
 interface ClientsState {
@@ -15,10 +16,30 @@ const initialState: ClientsState = {
 };
 
 export const getClients = createAsyncThunk<Client[], void>('clients/getClients', clientsApi.getClients);
-export const getClient = createAsyncThunk<Client, string>('clients/getClient', clientsApi.getClient);
-export const addClient = createAsyncThunk<Client, Client>('clients/addClient', clientsApi.addClient);
-export const editClient = createAsyncThunk<Client, Client>('clients/editClient', clientsApi.editClient);
-export const removeClient = createAsyncThunk<string, string>('clients/removeClient', clientsApi.removeClient);
+export const getClient = createAsyncThunk<Client, string, {state: RootState}>('clients/getClient', async (id, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.userReducer.user?.token as string
+
+    return clientsApi.getClient(id, token);
+});
+export const addClient = createAsyncThunk<Client, Client, {state: RootState}>('clients/addClient', async (client, thunkAPI) => {
+  const state = thunkAPI.getState();
+  const token = state.userReducer.user?.token as string
+
+  return clientsApi.addClient(client, token)
+});
+export const editClient = createAsyncThunk<Client, Client, {state: RootState}>('clients/editClient', async (client, thunkAPI) => {
+  const state = thunkAPI.getState();
+  const token = state.userReducer.user?.token as string
+
+  return clientsApi.editClient(client, token)
+});
+export const removeClient = createAsyncThunk<string, string, {state: RootState}>('clients/removeClient', async (id, thunkAPI) => {
+  const state = thunkAPI.getState();
+  const token = state.userReducer.user?.token as string
+
+  return clientsApi.removeClient(id, token)
+});
 
 export const clientsSlice = createSlice({
   name: 'clients',
