@@ -28,7 +28,7 @@ const RemovingPopup: React.FC<RemovingPopupProps> = ({visible, handlePopups}) =>
     return (
         <Modal
             open={visible}
-            onCancel={() => handlePopups('show_user')}
+            onCancel={() => handlePopups('removing_user')}
             footer={null}
             centered
             destroyOnClose>

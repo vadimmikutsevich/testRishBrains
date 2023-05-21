@@ -8,6 +8,7 @@ import {Client} from '../models'
 import styles from '../styles/modules/clientForm.module.css'
 import { rightIconMargin } from "../styles/inLineStyles";
 import avatar from '../assets/ava.png'
+import { addClient, editClient } from "../store/clientsSlice";
 
 interface ClientFormPopupProps {
     visible: boolean
@@ -23,7 +24,7 @@ const ClientFormPopup: React.FC<ClientFormPopupProps> = ({visible, handlePopups,
         name: '',
         surname: '',
         age: '0',
-        country: 'Belarus',
+        country: '',
         phone: ''
     }) 
 
@@ -44,8 +45,20 @@ const ClientFormPopup: React.FC<ClientFormPopupProps> = ({visible, handlePopups,
     }
     
     const handleCountry = useCallback((value: string) => {
-        setClientData({...clientData, country: value})
-    }, [clientData])
+        setClientData(prevClientData => ({...prevClientData, country: value}))
+    }, [])
+
+    const handleSubmit = () => {
+        console.log(clientData)
+        if(isEdit) {
+            dispatch(editClient({...clientData, id: client?.id as string}))
+            handlePopups('form_user')
+            return
+        }
+
+        dispatch(addClient(clientData))
+        handlePopups('form_user')
+    }
 
     useEffect(() => {
         if(isEdit) {
@@ -104,16 +117,16 @@ const ClientFormPopup: React.FC<ClientFormPopupProps> = ({visible, handlePopups,
 
                     <div className={styles.buttons}>
                         <div>
-                            <Button type="primary" size="large" style={{marginRight: 10}}>
+                            <Button type="primary" size="large" style={{marginRight: 10}} onClick={handleSubmit}>
                                 <span className={styles.btnText}>Save</span>
                             </Button>
-                            <Button size="large" type="text">
+                            <Button size="large" type="text" onClick={() => handlePopups('form_user')}>
                                 <span className={styles.btnText}>Cancel</span>
                             </Button>
                         </div>
 
                         <div>
-                            {isEdit && <Button danger type="text" className={styles.btn}>
+                            {isEdit && <Button danger type="text" className={styles.btn} onClick={() => {handlePopups('removing_user'); handlePopups('form_user')}}>
                                             <IoTrashOutline size={18} style={rightIconMargin}/>
                                             <span className={styles.btnText}>Delete user</span>
                                         </Button>}

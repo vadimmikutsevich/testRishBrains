@@ -22,7 +22,7 @@ export const getClient = createAsyncThunk<Client, string, {state: RootState}>('c
 
     return clientsApi.getClient(id, token);
 });
-export const addClient = createAsyncThunk<Client, Client, {state: RootState}>('clients/addClient', async (client, thunkAPI) => {
+export const addClient = createAsyncThunk<Client, Omit<Client, 'id'>, {state: RootState}>('clients/addClient', async (client, thunkAPI) => {
   const state = thunkAPI.getState();
   const token = state.userReducer.user?.token as string
 

@@ -39,9 +39,9 @@ export const getClient = async (id: string, token: string): Promise<Client> => {
   }
 };
 
-export const addClient = async (client: Client, token: string): Promise<Client> => {
+export const addClient = async (client: Omit<Client, 'id'>, token: string): Promise<Client> => {
   try {
-    const response = await axios.post<Client>(`${API_URL}/clients/add`, client, {
+    const response = await axios.post<{client: Client}>(`${API_URL}/clients/add`, client, {
       headers: {
         'Authorization': token
       }
@@ -49,7 +49,7 @@ export const addClient = async (client: Client, token: string): Promise<Client> 
     if (response.status !== 201) {
       throw new Error(`Unexpected response code: ${response.status}`);
     }
-    return response.data;
+    return response.data.client;
   } catch (error) {
     if(error instanceof Error) {
       throw new Error(`Could not add client: ${error.message}`);
@@ -61,7 +61,7 @@ export const addClient = async (client: Client, token: string): Promise<Client> 
 
 export const editClient = async (client: Client, token: string): Promise<Client> => {
   try {
-    const response = await axios.put<Client>(`${API_URL}/clients/edit`, client, {
+    const response = await axios.put<{client: Client}>(`${API_URL}/clients/edit`, client, {
       headers: {
         'Authorization': token
       }
@@ -69,7 +69,7 @@ export const editClient = async (client: Client, token: string): Promise<Client>
     if (response.status !== 200) {
       throw new Error(`Unexpected response code: ${response.status}`);
     }
-    return response.data;
+    return response.data.client;
   } catch (error) {
     if(error instanceof Error){
       throw new Error(`Could not edit client: ${error.message}`);

@@ -1,4 +1,4 @@
-import React, {useEffect, memo, useState} from "react";
+import React, {memo} from "react";
 import { Select } from "antd";
 
 const { Option } = Select;
@@ -8,42 +8,37 @@ interface CountrySelecetProps {
     handleCountry: (value: string) => void
 }
 
+const countries = [
+    'United States',
+    'Canada',
+    'Mexico',
+    'United Kingdom',
+    'France',
+    'Germany',
+    'China',
+    'Japan',
+    'Australia',
+    'Russia',
+    'Belarus'
+]
+
 const CountrySelect: React.FC<CountrySelecetProps> = memo(function({value, handleCountry}) {
-    const [countries, setCountries] = useState([
-        'United States',
-        'Canada',
-        'Mexico',
-        'United Kingdom',
-        'France',
-        'Germany',
-        'China',
-        'Japan',
-        'Australia',
-        'Russia',
-    ])
 
-   useEffect(() => {
-        if (value && !countries.includes(value)) {
-            setCountries(prevCountries => [...prevCountries, value]);
-        }
-        
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const onChangeValue = (value: string) => {
-        handleCountry(value)
+    const onChangeValue = (currentValue: string) => {
+        handleCountry(currentValue);
     }
 
     return (
         <Select
         value={value}
+        defaultValue={value ?? countries[0]}
         onChange={onChangeValue}
         style={{ width: 420 }}
         size="large"
         placeholder="Select a country"
         optionFilterProp="children">
-            {countries.map((country, index) => (
-                <Option key={index} value={country}>
+            {countries.map((country) => (
+                <Option key={country} value={country}>
                     {country}
                 </Option>
             ))}
