@@ -3,8 +3,8 @@ import { Modal, Button } from "antd";
 import { IoTrashOutline, IoPencilOutline, IoLocationOutline, IoPhonePortraitOutline, IoCalendarClearOutline } from "react-icons/io5";
 
 import { useAppSelector } from "../hooks";
-import avatar from '../assets/ava.png'
-import styles from '../styles/modules/clientPopup.module.css'
+import avatar from '../assets/ava.png';
+import styles from '../styles/modules/clientPopup.module.css';
 import { rightIconMargin } from "../styles/inLineStyles";
 
 interface ClientPopupProps {
@@ -16,6 +16,15 @@ const ClientPopup: React.FC<ClientPopupProps> = ({visible, handlePopups}) => {
 
     const client = useAppSelector(state => state.clientsReducer.selectedClient)
 
+    const handleDeleteBtn = () => {
+        handlePopups('removing_user')
+        handlePopups('show_user')
+    }
+
+    const handleEditBtn = () => {
+
+    }
+
     return (
         <Modal
             open={visible}
@@ -25,12 +34,12 @@ const ClientPopup: React.FC<ClientPopupProps> = ({visible, handlePopups}) => {
             destroyOnClose>
             <div className={styles.content}>
                 <div className={styles.buttons}>
-                    <Button type="text" className={styles.btn}>
+                    <Button type="text" className={styles.btn} onClick={handleEditBtn}>
                         <IoPencilOutline size={18} style={rightIconMargin} color="#313131"/>
                         <span className={styles.btnText} style={{color: '#313131'}}>Edit profile</span>
                     </Button>
 
-                    <Button danger type="text" className={styles.btn}>
+                    <Button danger type="text" className={styles.btn} onClick={handleDeleteBtn}>
                         <IoTrashOutline size={18} style={rightIconMargin}/>
                         <span className={styles.btnText}>Delete user</span>
                     </Button>

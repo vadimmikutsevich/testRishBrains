@@ -1,0 +1,45 @@
+.content {
+    text-align: center;
+    padding: 0 70px;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 42px;
+    color: #000000;
+    margin-top: 60px;
+}
+
+.confirmMessage {
+    color: #313131;
+    font-size: 16px;
+    line-height: 20px;
+    margin-top: 40px;
+}
+
+.buttons {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.submitBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #E9281B;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.closeBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #313131;
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 10px;
+}
