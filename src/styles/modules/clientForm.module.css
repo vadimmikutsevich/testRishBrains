@@ -1,0 +1,75 @@
+.content {
+    padding: 60px 70px;
+    width: 100%;
+}
+
+.title {
+    color: #000000;
+    line-height: 42px;
+    font-weight: 700;
+    font-size: 32px;
+}
+
+.clientInfo {
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+}
+
+.inputsBlock {
+    padding-left: 40px;
+    width: 100%;
+}
+
+.nameInputs {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    width: 420px;
+}
+
+.nameBlock {
+    width: 200px;
+}
+
+.inputLabel {
+    color: #313131;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.shortInput {
+    color: #313131;
+    width: 200px;
+}
+
+.longInputContainer {
+    width: 420px;
+    color: #313131;
+    margin-top: 20px;
+}
+
+.img {
+    object-fit: contain;
+    width: 200px;
+    height: 215px;
+}
+
+.buttons {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnText {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+}

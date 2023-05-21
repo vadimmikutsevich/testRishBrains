@@ -9,7 +9,7 @@ import { rightIconMargin } from "../styles/inLineStyles";
 
 interface ClientPopupProps {
     visible: boolean
-    handlePopups: (type: string) => void
+    handlePopups: (type: string, editabel?: boolean) => void
 }
 
 const ClientPopup: React.FC<ClientPopupProps> = ({visible, handlePopups}) => {
@@ -22,7 +22,8 @@ const ClientPopup: React.FC<ClientPopupProps> = ({visible, handlePopups}) => {
     }
 
     const handleEditBtn = () => {
-
+        handlePopups('form_user', true)
+        handlePopups('show_user')
     }
 
     return (

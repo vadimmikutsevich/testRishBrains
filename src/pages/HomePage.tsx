@@ -1,5 +1,5 @@
 import React, {useState, useCallback} from "react";
-import Header from '../modules/Header'
+import Header from '../modules/Header';
 import Main from "../modules/Main";
 import SignIn from "../modules/SignIn";
 import SignOut from "../modules/SignOut";
@@ -19,15 +19,15 @@ enum Popups {
 const HomePage: React.FC = () => {
     const [signInPopup, setSignInPopup] = useState(false)
     const [signOutPopup, setSignOutPopup] = useState(false)
-    const [clientFormPopup, setClientFormPopup] = useState(false)
+    const [clientFormPopup, setClientFormPopup] = useState({open: false, isEdit: false})
     const [clientPopup, setClientPopup] = useState(false)
     const [removingPopup, setRemovingPopup] = useState(false)
 
-    const handlePopups = useCallback((popupType: string) => {
+    const handlePopups = useCallback((popupType: string, editable?: boolean) => {
         if(popupType === Popups.SIGN_IN) setSignInPopup(!signInPopup)
         if(popupType === Popups.SIGN_OUT) setSignOutPopup(!signOutPopup)
         if(popupType === Popups.SHOW_USER) setClientPopup(!clientPopup)
-        if(popupType === Popups.FORM_USER) setClientFormPopup(!clientFormPopup)
+        if(popupType === Popups.FORM_USER) setClientFormPopup({...clientFormPopup, open: !clientFormPopup.open, isEdit: editable ?? false})
         if(popupType === Popups.REMOVING_USER) setRemovingPopup(!removingPopup)
 
     }, [clientFormPopup, clientPopup, removingPopup, signInPopup, signOutPopup])
@@ -39,7 +39,7 @@ const HomePage: React.FC = () => {
 
             {signInPopup && <SignIn visible={signInPopup} handlePopups={handlePopups}/>}
             {signOutPopup && <SignOut visible={signOutPopup} handlePopups={handlePopups}/>}
-            {clientFormPopup && <ClientFormPopup visible={clientFormPopup} handlePopups={handlePopups}/>}
+            {clientFormPopup && <ClientFormPopup visible={clientFormPopup.open} handlePopups={handlePopups} isEdit={clientFormPopup.isEdit}/>}
             {clientPopup && <ClientPopup visible={clientPopup} handlePopups={handlePopups}/>}
             {removingPopup && <RemovingPopup visible={removingPopup} handlePopups={handlePopups}/>}
         </div>

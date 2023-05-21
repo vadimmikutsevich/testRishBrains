@@ -4,7 +4,6 @@ import { Client } from '../models';
 const API_URL = 'http://localhost:3333';
 
 export const getClients = async (): Promise<Client[]> => {
-
   try {
     const response = await axios.get<{clients: Client[]}>(`${API_URL}/clients`);
     return response.data.clients;
