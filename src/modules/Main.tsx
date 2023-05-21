@@ -1,21 +1,22 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import { Col, Input, Row, Spin, Layout } from 'antd'
-import { IoSearchOutline } from 'react-icons/io5'
+import { IoSearchOutline, IoAddOutline } from 'react-icons/io5'
 import ClientCard from './ClientCard'
 import SortInput from '../components/SortInput'
 import { getClients } from '../store/clientsSlice'
 import styles from '../styles/modules/main.module.css'
-import { useAppDispatch, useAppSelector } from '../hooks'
+import { useAppDispatch, useAppSelector, useAuth } from '../hooks'
 import { Client } from '../models'
 
 const { Content } = Layout
 
 interface MainProps {
-  handlePopups: (type: string) => void
+  handlePopups: (type: string, isEdit?: boolean) => void
 }
 
 const Main: React.FC<MainProps> = ({ handlePopups }) => {
   const dispatch = useAppDispatch()
+  const isLogin = useAuth()
   const {clients, status} = useAppSelector(state => state.clientsReducer)
 
   const [search, setSearch] = useState('');
@@ -58,6 +59,8 @@ const Main: React.FC<MainProps> = ({ handlePopups }) => {
   return (
     <div className={styles.wrapper}>
         <Content className={styles.content}>
+            {isLogin && <div onClick={() => handlePopups('form_user', false)} className={styles.newClientBtn}><IoAddOutline color='white' size={24}/></div>}
+
             <div className={styles.sortInputs}>
                 <Input placeholder="Type to search..." value={search} onChange={handleSearchChange} className={styles.searchInput} prefix={<IoSearchOutline size={22} color='#87898F'/>}/>
                 <SortInput handleSortChange={handleSortChange} handleSortOrderChange={handleSortOrderChange}/>

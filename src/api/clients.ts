@@ -46,7 +46,7 @@ export const addClient = async (client: Omit<Client, 'id'>, token: string): Prom
         'Authorization': token
       }
     });
-    if (response.status !== 201) {
+    if (response.status !== 200) {
       throw new Error(`Unexpected response code: ${response.status}`);
     }
     return response.data.client;
@@ -69,6 +69,7 @@ export const editClient = async (client: Client, token: string): Promise<Client>
     if (response.status !== 200) {
       throw new Error(`Unexpected response code: ${response.status}`);
     }
+
     return response.data.client;
   } catch (error) {
     if(error instanceof Error){

@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button } from "antd";
+import { Modal, Button, message } from "antd";
 
 import styles from '../styles/modules/removingPopup.module.css'
 import { removeClient } from "../store/clientsSlice";
@@ -15,9 +15,15 @@ const RemovingPopup: React.FC<RemovingPopupProps> = ({visible, handlePopups}) =>
     const client = useAppSelector(state => state.clientsReducer.selectedClient)
 
     const handleRemove = () => {
-        dispatch(removeClient(client?.id as string))
+        dispatch(removeClient(client?.id as string)).then((data) => {
+            handlePopups('removing_user')
+            
+            if(!data.payload) {
+                return message.error('Something went wrong!')
+            }
 
-        handlePopups('removing_user')
+            return message.success('Client was deleted successfuly!')
+        })
     }
 
     const handleClose = () => {

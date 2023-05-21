@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from "react";
-import { Modal, Input, Button } from "antd";
+import { Modal, Input, Button, message } from "antd";
 import { IoCalendarOutline, IoPhonePortraitOutline, IoTrashOutline } from "react-icons/io5";
 import CountrySelect from "../components/CountrySelect";
 
@@ -49,15 +49,26 @@ const ClientFormPopup: React.FC<ClientFormPopupProps> = ({visible, handlePopups,
     }, [])
 
     const handleSubmit = () => {
-        console.log(clientData)
         if(isEdit) {
-            dispatch(editClient({...clientData, id: client?.id as string}))
-            handlePopups('form_user')
-            return
-        }
+            dispatch(editClient({...clientData, id: client?.id as string})).then((data) => {
+                handlePopups('form_user')
 
-        dispatch(addClient(clientData))
-        handlePopups('form_user')
+                if(!data.payload) {
+                   return  message.error('Something went wrong!')
+                } 
+                   return message.success('Client was edited successfuly!')
+            })
+        } else {
+            dispatch(addClient(clientData)).then((data) => {
+                handlePopups('form_user')
+
+                if(!data.payload) {
+                  return message.error('Something went wrong!')
+                } 
+                  return message.success('Client was edited successfuly!')
+                
+            })
+        }
     }
 
     useEffect(() => {
