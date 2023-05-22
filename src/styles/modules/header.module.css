@@ -53,3 +53,14 @@
     justify-content: center;
     align-items: center;
 }
+
+@media(max-width: 768px) {
+    .companyBlock {
+        padding: 21px 20px;
+    }
+
+    .companyTitleLogo {
+        width: 30.04px;
+        height: 16.89px;
+    }
+}

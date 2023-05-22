@@ -6,6 +6,7 @@ import CountrySelect from "../components/CountrySelect";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import {Client} from '../models'
 import styles from '../styles/modules/clientForm.module.css'
+import { fullScreenModal } from "../styles/inLineStyles";
 import { rightIconMargin } from "../styles/inLineStyles";
 import avatar from '../assets/ava.png'
 import { addClient, editClient } from "../store/clientsSlice";
@@ -19,6 +20,7 @@ interface ClientFormPopupProps {
 const ClientFormPopup: React.FC<ClientFormPopupProps> = ({visible, handlePopups, isEdit}) => {
     const dispatch = useAppDispatch()
     const client = useAppSelector(state => state.clientsReducer.selectedClient)
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
     const [clientData, setClientData] = useState({
         name: '',
@@ -78,6 +80,14 @@ const ClientFormPopup: React.FC<ClientFormPopupProps> = ({visible, handlePopups,
 
     }, [client, isEdit])
 
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => {
+        window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     return (
         <Modal
             open={visible}
@@ -85,7 +95,9 @@ const ClientFormPopup: React.FC<ClientFormPopupProps> = ({visible, handlePopups,
             onCancel={() => handlePopups('form_user')}
             footer={null}
             centered
-            destroyOnClose>
+            bodyStyle={isMobile ? fullScreenModal : {}}
+            destroyOnClose
+            className={styles.modal}>
                 <div className={styles.content}>
                     <h2 className={styles.title}>
                         {isEdit ? 'Edit client' : 'New client'}
@@ -127,17 +139,17 @@ const ClientFormPopup: React.FC<ClientFormPopupProps> = ({visible, handlePopups,
                     </div>
 
                     <div className={styles.buttons}>
-                        <div>
-                            <Button type="primary" size="large" style={{marginRight: 10}} onClick={handleSubmit}>
+                        <div className={styles.usualButtons}>
+                            <Button type="primary" size="large" style={{marginRight: 10}} onClick={handleSubmit} className={styles.btn}>
                                 <span className={styles.btnText}>Save</span>
                             </Button>
-                            <Button size="large" type="text" onClick={() => handlePopups('form_user')}>
+                            <Button size="large" type="text" onClick={() => handlePopups('form_user')} className={styles.btn}>
                                 <span className={styles.btnText}>Cancel</span>
                             </Button>
                         </div>
 
-                        <div>
-                            {isEdit && <Button danger type="text" className={styles.btn} onClick={() => {handlePopups('removing_user'); handlePopups('form_user')}}>
+                        <div className={styles.deleteBlock}>
+                            {isEdit && <Button danger type="text" className={styles.deleteBtn} onClick={() => {handlePopups('removing_user'); handlePopups('form_user')}}>
                                             <IoTrashOutline size={18} style={rightIconMargin}/>
                                             <span className={styles.btnText}>Delete user</span>
                                         </Button>}

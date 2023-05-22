@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Modal, Input, Button, message} from "antd";
 import { loginUser } from "../store/userSlice";
 import { useAppDispatch } from "../hooks";
 import styles from '../styles/modules/signIn.module.css';
+import { fullScreenModal } from "../styles/inLineStyles";
 
 interface SignInProps {
     visible: boolean
@@ -14,6 +15,15 @@ const SignIn: React.FC<SignInProps> = ({visible, handlePopups}) => {
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 425);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 425);
+        window.addEventListener('resize', handleResize);
+        return () => {
+        window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const handleLogin = () => {
         handlePopups('sign_in')
@@ -33,7 +43,9 @@ const SignIn: React.FC<SignInProps> = ({visible, handlePopups}) => {
             onCancel={() => handlePopups('sign_in')}
             footer={null}
             centered
-            destroyOnClose>
+            bodyStyle={isMobile ? fullScreenModal : {}}
+            destroyOnClose
+            className={styles.modal}>
                 <div className={styles.content}>
                     <h2 className={styles.title}>Sign In</h2>
 

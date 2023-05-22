@@ -1,6 +1,8 @@
 import React, {memo} from "react";
 import { Select } from "antd";
 
+import styles from '../styles/components/countrySelect.module.css'
+
 const { Option } = Select;
 
 interface CountrySelecetProps {
@@ -31,9 +33,9 @@ const CountrySelect: React.FC<CountrySelecetProps> = memo(function({value, handl
     return (
         <Select
         value={value}
+        className={styles.select}
         defaultValue={value ?? countries[0]}
         onChange={onChangeValue}
-        style={{ width: 420 }}
         size="large"
         placeholder="Select a country"
         optionFilterProp="children">

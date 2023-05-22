@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Modal, Button } from "antd";
 import { IoTrashOutline, IoPencilOutline, IoLocationOutline, IoPhonePortraitOutline, IoCalendarClearOutline } from "react-icons/io5";
 
 import { useAppSelector } from "../hooks";
 import avatar from '../assets/ava.png';
 import styles from '../styles/modules/clientPopup.module.css';
-import { rightIconMargin } from "../styles/inLineStyles";
+import { fullScreenModal, rightIconMargin } from "../styles/inLineStyles";
 
 interface ClientPopupProps {
     visible: boolean
@@ -15,6 +15,15 @@ interface ClientPopupProps {
 const ClientPopup: React.FC<ClientPopupProps> = ({visible, handlePopups}) => {
 
     const client = useAppSelector(state => state.clientsReducer.selectedClient)
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => {
+        window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const handleDeleteBtn = () => {
         handlePopups('removing_user')
@@ -32,8 +41,11 @@ const ClientPopup: React.FC<ClientPopupProps> = ({visible, handlePopups}) => {
             onCancel={() => handlePopups('show_user')}
             footer={null}
             centered
-            destroyOnClose>
+            destroyOnClose
+            bodyStyle={isMobile ? fullScreenModal : {}}
+            className={styles.modal}>
             <div className={styles.content}>
+
                 <div className={styles.buttons}>
                     <Button type="text" className={styles.btn} onClick={handleEditBtn}>
                         <IoPencilOutline size={18} style={rightIconMargin} color="#313131"/>
@@ -71,12 +83,13 @@ const ClientPopup: React.FC<ClientPopupProps> = ({visible, handlePopups}) => {
                         {client?.age} y.o
                     </span>
                 </p>
-            </div>
 
-            <div className={styles.closeBtn}>
-                <Button type="text" onClick={() => handlePopups('show_user')}>
-                    <span className={styles.btnText} style={{color: '#313131'}}>Close</span>
-                </Button>
+
+                <div className={styles.closeBtn}>
+                    <Button type="text" onClick={() => handlePopups('show_user')}>
+                        <span className={styles.btnText} style={{color: '#313131'}}>Close</span>
+                    </Button>
+                </div>
             </div>
         </Modal>
     )

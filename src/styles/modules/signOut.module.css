@@ -29,3 +29,18 @@
     width: 100%;
     margin-top: 20px;
 }
+
+@media(max-width: 425px) {
+    .content {
+        padding: 0 30px;
+        height: 100%;
+    }
+
+    .modal {
+        width: 100% !important;
+        max-width: 100% !important;
+        top: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}

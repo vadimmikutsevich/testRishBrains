@@ -62,7 +62,7 @@
     justify-content: space-between;
 }
 
-.btn {
+.deleteBtn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -72,4 +72,70 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 20px;
+}
+
+@media(max-width: 768px) {
+    .content {
+        padding: 0 2%;
+        height: 100%;
+    }
+
+    .title {
+        text-align: center;
+    }
+
+    .inputsBlock, .clientInfo, .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nameInputs {
+        flex-direction: column;
+    }
+    
+    .longInputContainer, .nameBlock, .shortInput, .nameInputs {
+        max-width: 360px;
+        width: 100%;
+    }
+
+    .buttons {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column-reverse;
+    }
+
+    .usualButtons {
+        width: 100%;
+    }
+
+    .deleteBlock {
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 360px;
+    }
+
+    .usualButtons {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+        max-width: 360px;
+        margin-top: 35px;
+    }
+
+    .btn {
+        max-width: 125px;
+        width: 100%;
+    }
+
+    .modal {
+        width: 100% !important;
+        max-width: 100% !important;
+        top: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
 }

@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { FC } from "react"
+import React, { FC, useState, useEffect } from "react"
 import { Dropdown, Button } from 'antd'
 import {IoLogInOutline, IoPersonOutline, IoChevronDownOutline} from 'react-icons/io5'
 import { useAuth } from "../hooks"
 import logo from '../assets/logo.png'
+import shortLogo from '../assets/short-logo.png'
 import styles from '../styles/modules/header.module.css'
 import { leftIconMargin, rightIconMargin } from "../styles/inLineStyles"
 
@@ -13,6 +14,15 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({handlePopups}) => {
     const isUserLoggedIn = useAuth()
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => {
+        window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const handleLogout = () => {
        handlePopups('sign_out')
@@ -32,7 +42,7 @@ const Header: FC<HeaderProps> = ({handlePopups}) => {
     return (
         <header className={styles.header}>
             <div className={styles.companyBlock}>
-                <img src={logo} alt="logo" className={styles.companyTitleLogo}/>
+                <img src={isMobile ? shortLogo : logo} alt="logo" className={styles.companyTitleLogo}/>
             </div>
 
             <nav className={styles.nav}>
@@ -51,7 +61,9 @@ const Header: FC<HeaderProps> = ({handlePopups}) => {
                 ) : (
                     <Button className={styles.button} type="primary" onClick={() => handlePopups('sign_in')}>
                         <IoLogInOutline size={24} style={rightIconMargin}/>
-                        <span className={styles.buttonText}>Sign In</span>
+                        <span className={styles.buttonText}>
+                            {!isMobile && 'Sign In' }
+                        </span>
                     </Button>
                 )}
             </nav>

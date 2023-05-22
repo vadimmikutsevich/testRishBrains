@@ -72,7 +72,7 @@ const Main: React.FC<MainProps> = ({ handlePopups }) => {
                 <div className={styles.clientsContainer}>
                     <Row gutter={16}>
                         {sortedAndFilteredClients.map((client: Client) => (
-                            <Col span={8} key={client.id}>
+                            <Col xs={24} sm={12} md={8} key={client.id} style={{marginTop: 20}}>
                                 <ClientCard client={client} handlePopups={handlePopups}/>
                             </Col>
                         ))}

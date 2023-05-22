@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Modal, Button, message } from "antd";
 
 import styles from '../styles/modules/removingPopup.module.css'
+import { fullScreenModal } from "../styles/inLineStyles";
 import { removeClient } from "../store/clientsSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 
@@ -13,6 +14,15 @@ interface RemovingPopupProps {
 const RemovingPopup: React.FC<RemovingPopupProps> = ({visible, handlePopups}) => {
     const dispatch = useAppDispatch()
     const client = useAppSelector(state => state.clientsReducer.selectedClient)
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 425);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 425);
+        window.addEventListener('resize', handleResize);
+        return () => {
+        window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const handleRemove = () => {
         dispatch(removeClient(client?.id as string)).then((data) => {
@@ -37,7 +47,9 @@ const RemovingPopup: React.FC<RemovingPopupProps> = ({visible, handlePopups}) =>
             onCancel={() => handlePopups('removing_user')}
             footer={null}
             centered
-            destroyOnClose>
+            destroyOnClose
+            bodyStyle={isMobile ? fullScreenModal : {}}
+            className={styles.modal}>
                 <div className={styles.content}>
                     <h2 className={styles.title}>
                         DELETE
