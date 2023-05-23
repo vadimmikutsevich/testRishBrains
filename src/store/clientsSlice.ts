@@ -44,7 +44,11 @@ export const removeClient = createAsyncThunk<string, string, {state: RootState}>
 export const clientsSlice = createSlice({
   name: 'clients',
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedClient: (state, action: PayloadAction<Client>) => {
+      state.selectedClient = action.payload;
+    },
+  },
   extraReducers: (builder) => {
       builder
       .addCase(getClients.fulfilled, (state, { payload }: PayloadAction<Client[]>) => {
@@ -76,5 +80,7 @@ export const clientsSlice = createSlice({
       });
   },
 });
+
+export const { setSelectedClient } = clientsSlice.actions;
 
 export default clientsSlice.reducer;

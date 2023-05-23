@@ -1,8 +1,9 @@
 .card {
     text-align: center;
+    cursor: pointer;
 }
 
-.card:hover {
+.hoverContainer:hover {
     background-color: #F8F9FF;
 }
 
