@@ -2,6 +2,23 @@
     text-align: center;
 }
 
+.card:hover {
+    background-color: #F8F9FF;
+}
+
+.hoverPencil {
+    position: absolute;
+    right: 10%;
+    cursor: pointer;
+    margin-right: 25px;
+}
+
+.hoverTrash {
+    position: absolute;
+    right: 18px;
+    cursor: pointer;
+}
+
 .avatar {
     width: 120px;
     height: 129px;

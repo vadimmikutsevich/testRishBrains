@@ -1,6 +1,6 @@
-import React, {FC, memo} from "react"
-import { Card } from "antd"
-import {IoLocationOutline, IoPhonePortraitOutline, IoCalendarClearOutline} from 'react-icons/io5'
+import React, {FC, memo, useState} from "react"
+import { Card, Button } from "antd"
+import {IoLocationOutline, IoPhonePortraitOutline, IoCalendarClearOutline, IoTrashOutline, IoPencilOutline} from 'react-icons/io5'
 import { getClient } from "../store/clientsSlice"
 import { Client } from "../models"
 import styles from '../styles/modules/clientCard.module.css'
@@ -17,6 +17,8 @@ const ClientCard: FC<UserCardProps> = memo(function({client, handlePopups}) {
     const dispatch = useAppDispatch()
     const isLogin = useAuth()
 
+    const [isHovered, setIsHovered] = useState(false)
+
     const showClient = () => {
         if(isLogin) {
             dispatch(getClient(client.id)).then(() => handlePopups('show_user'))
@@ -25,7 +27,18 @@ const ClientCard: FC<UserCardProps> = memo(function({client, handlePopups}) {
     }
 
     return (
-        <Card bordered={false} className={styles.card} onClick={showClient}>
+        <Card
+            bordered={false}
+            className={styles.card}
+            onClick={showClient}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}>
+
+            {isHovered && <div>
+                    <IoPencilOutline size={22} className={styles.hoverPencil} onClick={() => handlePopups('form_user')}/>
+                    <IoTrashOutline size={22} className={styles.hoverTrash} onClick={() => handlePopups('removing_user')}/>
+                </div>}
+
             <img src={avatar} alt="avatar" className={styles.avatar}/>
 
             <p className={styles.name}>
